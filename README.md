@@ -1,1 +1,1 @@
-# Insiders
+![](./docs/source/_static/insider.svg)
