@@ -1,8 +1,5 @@
 import sys
-sys.path.append('../')
-sys.path.append('../testboard')
-
-from testboard.validators.sequecialkfold import SequencialKFold
+from ..validators.sequecialkfold import SequencialKFold
 from testboard.data_mining.stocks import Stocks, CLOSING, OPENING, MAX_PRICE
 from testboard.data_mining.stocks import MIN_PRICE, MEAN_PRICE, VOLUME
 from testboard.simulator.plotter import Plotter

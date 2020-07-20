@@ -3,10 +3,11 @@
 import gc
 from copy import copy
 
-from validators.sequecialkfold import SequencialKFold
-from simulator.plotter import Plotter
-from data_mining.smote import duplicate_data
-
+from validators.sequencial_kfold import SequencialKFold
+from validators.plotters.plotter_utils import Plotter
+from b3data.utils.smote import duplicate_data
+from b3data.stocks import Stocks, CLOSING, OPENING, MAX_PRICE
+from b3data.stocks import MIN_PRICE, MEAN_PRICE, VOLUME
 
 class Experimenter():
     """Nani."""
@@ -67,7 +68,7 @@ class Experimenter():
         results_loss = []
         conf_mats = []
 
-        stocks = Stocks(year=year, cod=stock, period=5)
+        stocks = Stocks(year=year, cod=stock, period=7)
         dataset = stocks.selected_fields(fields)
         dataset = duplicate_data(dataset)
         sequencial_kfold = SequencialKFold(n_split=6)
@@ -85,9 +86,13 @@ class Experimenter():
             results_loss.append(loss)
             conf_mats.append(conf_mat)
 
-        return results_acc,results_f1_score, results_loss, conf_mats
+        return results_acc, results_f1_score, results_loss, conf_mats
 
     @staticmethod
     def log(message):
         """Nani."""
         print('[Experimenter] ' + message)
+
+
+e = Experimenter(stock='ABEV3', cells=150, batch_size=2, optimizer='adam')
+e.run()

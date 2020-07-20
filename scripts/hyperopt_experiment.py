@@ -7,8 +7,8 @@ import os
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
-from testboard.data_mining.stocks import Stocks
-from testboard.data_mining.stocks import CLOSING, OPENING, MAX_PRICE, MIN_PRICE, MEAN_PRICE, VOLUME
+from b3data.stocks import Stocks
+from b3data.stocks import CLOSING, OPENING, MAX_PRICE, MIN_PRICE, MEAN_PRICE, VOLUME
 from hyperopt import hp, fmin, tpe, hp, STATUS_OK, Trials
 import numpy
 from hyperopt.plotting import main_plot_vars
@@ -23,7 +23,7 @@ space = {
     'nb_epochs' :  5000,
 }
 
-stocks = Stocks(year=2014, cod=sys.argv[1], period=5)
+stocks = Stocks(year=2014, cod=sys.argv[1], period=6)
 dataset = stocks.selected_fields([CLOSING])
 
 def label(dataset, look_back_proportion, mean_of=0):

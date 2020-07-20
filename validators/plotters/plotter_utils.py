@@ -16,8 +16,8 @@ class Plotter():
         _, ax_plot = plt.subplots()
         hfont = {'fontname': 'monospace'}
         ax_plot.set_title("{}-{}".format(stock, year), **hfont)
-        ax_plot.set_xlabel('Window Size', **hfont)
-        ax_plot.set_ylabel('Accuracy', **hfont)
+        ax_plot.set_xlabel('Janela', **hfont)
+        ax_plot.set_ylabel('Precisão', **hfont)
         bplot = ax_plot.boxplot(data, patch_artist=True, sym='.')
         ax_plot.set_xticklabels([1, 3, 6, 9, 12])
         colors = ['#A0D1CA', '#40C1AC', '#00A3AD', '#007398', '#005A6F']
@@ -37,8 +37,8 @@ class Plotter():
         _, ax_plot = plt.subplots()
         hfont = {'fontname': 'monospace'}
         ax_plot.set_title("{}-{}".format(stock, year), **hfont)
-        ax_plot.set_xlabel('Quantidade de Células LSTM', **hfont)
-        ax_plot.set_ylabel('Accuracy', **hfont)
+        ax_plot.set_xlabel('Quantidade de unidades LSTM', **hfont)
+        ax_plot.set_ylabel('Precisão', **hfont)
         bplot = ax_plot.boxplot(data, patch_artist=True, sym='.')
         ax_plot.set_xticklabels(['1', '50', '80', '100', '150', '200'])
         colors = ['#A0D1CA', '#40C1AC', '#00A3AD', '#007398', '#005A6F']
@@ -60,8 +60,8 @@ class Plotter():
         hfont = {'fontname': 'monospace'}
         colors = ['#A0D1CA', '#40C1AC', '#00A3AD', '#007398', '#005A6F']
         ax_plot.set_title("{}-{}".format(stock, year), **hfont)
-        ax_plot.set_xlabel('Epoch', **hfont)
-        ax_plot.set_ylabel('Loss', **hfont)
+        ax_plot.set_xlabel('Épocas', **hfont)
+        ax_plot.set_ylabel('Perda', **hfont)
         for loss_list, color in zip(loss_train, colors):
             ax_plot.plot(loss_list, color=color)
         plt.show()
@@ -74,15 +74,15 @@ class Plotter():
         colors = ['#A0D1CA', '#40C1AC', '#00A3AD', '#007398', '#005A6F']
         lines = [(0, (1, 10)),':', '-.', '--', '-', '-']
         ax1.set_title("{}-{}".format(stock, year), **hfont)
-        ax1.set_xlabel('Epoch', **hfont)
-        ax1.set_ylabel('Loss', **hfont)
+        ax1.set_xlabel('Época', **hfont)
+        ax1.set_ylabel('Perda', **hfont)
         for loss_list, color, line in zip(loss, colors, lines):
             ax1.plot(loss_list, color=color, linestyle=line)
 
         left, bottom, width, height = [0.55, 0.55, 0.3, 0.3]
         ax2 = fig1.add_axes([left, bottom, width, height])
-        ax2.set_xlabel('Window Size', **hfont)
-        ax2.set_ylabel('Accuracy', **hfont)
+        ax2.set_xlabel('Janela', **hfont)
+        ax2.set_ylabel('Precisão', **hfont)
 
         bplot = ax2.boxplot(acc, patch_artist=True, sym='.')
         ax2.set_xticklabels([1, 3, 6, 9, 12])
@@ -104,7 +104,7 @@ class Plotter():
 
         Normalization can be applied by setting `normalize=True`.
         """
-        title = "Confusion Matrix {}-{}".format(stock, year)
+        title = "Matriz de Confusão {}-{}".format(stock, year)
 
         # Compute confusion matrix
         cm = confusion_matrix(y_true, y_pred)
@@ -127,15 +127,14 @@ class Plotter():
                                             + cm[1][0] + cm[1][1])
         accuracy = round(accuracy, 4)
 
-        textstr = "Sensitivity: {}\nPrecision: {}\n".format(sensitivity, precision)
-        textstr2 = "Specifity: {}\nAccuracy: {}".format(specifity, accuracy)
+        textstr = "Sensibilidade: {}\nPrecisão: {}\n".format(sensitivity, precision)
+        textstr2 = "Especificidade: {}\nAcurácia: {}".format(specifity, accuracy)
         textstr += textstr2
 
         fig, ax = plt.subplots()
         plt.text(1.05, 0.5, textstr, fontsize=12,
                  verticalalignment='center', transform=ax.transAxes)
         plt.subplots_adjust(right=0.6)
-
         ax.imshow(cm, interpolation='nearest', cmap=cmap)
         # ax.figure.colorbar(im, ax=ax)
         # We want to show all ticks...
@@ -144,9 +143,11 @@ class Plotter():
                yticks=np.arange(cm.shape[0]),
                # title=title,
                xticklabels=classes, yticklabels=classes,
-               ylabel='True label',
-               xlabel='Predicted label')
+               ylabel='Rótulo Verdadeiro',
+               xlabel='Rótulo Previsto')
 
+
+        ax.set_ylim(2-0.5, -0.5)
         # Loop over data dimensions and create text annotations.
         fmt = '.2f' if normalize else 'd'
         thresh = np.median(cm)
@@ -162,4 +163,5 @@ class Plotter():
                                                                features)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         plt.savefig(filename)
+        plt.show()
         plt.close('all')

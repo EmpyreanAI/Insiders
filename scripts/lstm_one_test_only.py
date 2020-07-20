@@ -7,18 +7,19 @@ import os
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
-from testboard.data_mining.stocks import Stocks
-from testboard.data_mining.stocks import CLOSING, OPENING, MAX_PRICE, MIN_PRICE, MEAN_PRICE, VOLUME
+from b3data.stocks import Stocks
+from b3data.stocks import CLOSING, OPENING, MAX_PRICE, MIN_PRICE, MEAN_PRICE, VOLUME
 from keras import backend as K
 import numpy
 
-stocks = Stocks(year=2014, cod=sys.argv[1], period=5)
-dataset = stocks.selected_fields([CLOSING])
+code = 'PETR3'
+batch_size = 1
+cells = 1
+look_back = 12
+optimizer = 'rmsprop'
 
-batch_size = int(sys.argv[2])
-cells = int(sys.argv[3])
-look_back = int(sys.argv[4])
-optimizer = sys.argv[5]
+stocks = Stocks(year=2014, cod='code', period=6)
+dataset = stocks.selected_fields([CLOSING])
 
 def label(dataset, look_back_proportion, mean_of=0):
     """Nani."""
@@ -87,9 +88,9 @@ model.compile(loss='binary_crossentropy',
 train_x, train_y, test_x, test_y, look_back = create_data_set(look_back_proportion=look_back)
 
 model.fit(train_x, train_y, batch_size=batch_size, epochs=5000,
-               verbose=2, validation_split=0.33)
+          verbose=2, validation_split=0.33)
 loss, acc, f1_score, precision, recall = model.evaluate(test_x, test_y,
-                             verbose=2)
+                                                        verbose=2)
 
 print("F1_Score: " + str(f1_score))
 print("Acc: " + str(acc))
