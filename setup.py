@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="insider",
+    name="insiders",
     version="0.0.1",
     author="EmpyreanAI",
     author_email="author@example.com",
