@@ -24,7 +24,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=requirements_list(),
     include_package_data=True,
-    package_data={"":['saved_models/*.h5']},
+    package_data={"insiders":['saved_models/*.h5']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
