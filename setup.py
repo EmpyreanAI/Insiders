@@ -6,6 +6,7 @@ def requirements_list():
         for line in req:
             list_of_req.append(line)
 
+    print(list_of_req)
     return list_of_req
 
 with open("README.md", "r") as fh:
