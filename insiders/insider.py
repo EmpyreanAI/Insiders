@@ -1,9 +1,11 @@
 from keras.models import load_model
 from decimal import Decimal
 from pkg_resources import resource_filename, Requirement
-from insiders.models.denselstm import DenseLSTM
+from models.denselstm import DenseLSTM
 import numpy
 from b3data.utils.stock_util import StockUtil
+import pandas as pd
+
 
 class Insider:
 
@@ -38,12 +40,17 @@ class Insider:
 
         s = StockUtil(codes, windows)
         prices, _ = s.prices_preds(2014, 2014)
-        cells = {'PETR3': 50, 'VALE3': 50, 'ABEV3': 50}
         preds = []
         for index, code in enumerate(codes):
-            ins = Insider(code, windows[index], cells[code])
+            ins = Insider(code, windows[index], 50)
             preds.append(ins.predict(prices[index]))
+            prices[index] = prices[index][windows[index]:]
         
         return prices, preds
 
-# prices, preds = Insider.stock_and_predicts(['PETR3', 'VALE3', 'ABEV3'], [6, 6, 9], start_month=7)
+prices, preds = Insider.stock_and_predicts(['PETR3', 'VALE3', 'ABEV3'], [6, 6, 9], start_month=7)
+
+
+df = pd.DataFrame({'prices': prices[1], 'preds': preds[1]})
+df.to_csv('VALE3.csv')
+
