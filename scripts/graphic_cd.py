@@ -3,9 +3,9 @@ import Orange, orngStat
 import pandas
 import numpy
 
-code = 'PETR3'
+code = 'ABEV3'
 
-df = pandas.read_csv(f'../results/posthoc_{code}.csv', index_col=0)
+df = pandas.read_csv('../results/posthoc_{}.csv'.format(code), index_col=0)
 
 initial_rank = 1
 names = ['cells_1', 'cells_50', 'cells_80', 'cells_100', 'cells_150', 'cells_200']
@@ -31,6 +31,6 @@ print(avranks)
 
 names = ['1 Unidade', '50 Unidades', '80 Unidades', '100 Unidades', '150 Unidades', '200 Unidades']
 cd = orngStat.compute_CD(avranks, 10) #tested on 30 datasets
-orngStat.graph_ranks(f'../results/final_posthoc_{code}.eps', avranks, names, cd=cd, width=6, textspace=1.5)
+orngStat.graph_ranks('../results/final_posthoc_{}.eps'.format(code), avranks, names, cd=cd, width=6, textspace=1.5)
 # plt.show()
 # plt.savefig('../graphics/cd_digram.png')
