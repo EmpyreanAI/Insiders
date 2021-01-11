@@ -15,7 +15,7 @@ class DenseGRU(NeuralNetwork):
     """
 
     def __init__(self, look_back=12, dense=True,
-                 gru_cells=1000, input_shape=1):
+                 gru_cells=1, input_shape=1):
         """Nani."""
         self.look_back = look_back
         self.dense = dense
@@ -46,9 +46,11 @@ class DenseGRU(NeuralNetwork):
         model = Sequential()
         gru_cells = 1 if not self.dense else self.gru_cells
         model.add(GRU(gru_cells, input_shape=(self.input_shape,
-                                              self.look_back)))
+                                              self.look_back),
+                        bias_initializer='random_normal')))
         if self.dense:
-            model.add(Dense(1))
+            model.add(Dense(activation="sigmoid", units=1))
+
         model.compile(loss='binary_crossentropy',
                       optimizer='adam',
                       metrics=['acc', f1_m, precision_m, recall_m])
